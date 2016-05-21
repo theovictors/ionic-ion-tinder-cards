@@ -126,7 +126,7 @@
 
     isUnderThreshold: function() {
       //return true;
-      return Math.abs(this.thresholdAmount) < 0.4;
+      return Math.abs(this.thresholdAmount) < 0.1;
     },
     /**
      * Fly the card out or animate back into resting position.
@@ -227,8 +227,8 @@
 
       this.rotationAngle = Math.atan(o);
 
-      this.x = this.startX + (e.gesture.deltaX * 0.8);
-      this.y = this.startY + (e.gesture.deltaY * 0.8);
+      this.x = this.startX + (e.gesture.deltaX * 1);
+      this.y = this.startY + (e.gesture.deltaY * 1);
 
       this.el.style.transform = this.el.style.webkitTransform = 'translate3d(' + this.x + 'px, ' + this.y  + 'px, 0) rotate(' + (this.rotationAngle || 0) + 'rad)';
 
@@ -296,7 +296,6 @@
             leftText: leftText,
             rightText: rightText,
             onPartialSwipe: function(amt) {
-              swipeCards.partial(amt);
               var self = this;
               $timeout(function() {
                 if (amt < 0) {
@@ -359,7 +358,7 @@
 
               .easing({
                 type: 'spring',
-                frequency: 15,
+                frequency: 0,
                 friction: 250,
                 initialForce: false
               }) 
@@ -410,9 +409,6 @@
           for(i = 0; i < existingCards.length; i++) {
             card = existingCards[i];
             if(!card) continue;
-            if(i > 0) {
-              card.style.transform = card.style.webkitTransform = 'translate3d(0, ' + (i * 4) + 'px, 0)';
-            }
             card.style.zIndex = (existingCards.length - i);
           }
         };
@@ -420,23 +416,6 @@
         $timeout(function() {
           sortCards();
         });
-
-        var bringCardUp = function(card, amt, max) {
-          var position, newTop;
-          position = card.style.transform || card.style.webkitTransform;
-          newTop = Math.max(0, Math.min(max, max - (max * Math.abs(amt))));
-          card.style.transform = card.style.webkitTransform = 'translate3d(0, ' + newTop + 'px, 0)';
-        };
-
-        this.partial = function(amt) {
-          cards = $element[0].querySelectorAll('td-card');
-          firstCard = cards[0];
-          secondCard = cards.length > 2 && cards[1];
-          thirdCard = cards.length > 3 && cards[2];
-
-          secondCard && bringCardUp(secondCard, amt, 4);
-          thirdCard && bringCardUp(thirdCard, amt, 8);
-        };
       }]
     }
   }])
