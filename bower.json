@@ -4,7 +4,7 @@
   "codename": "lanthanum-leopard",
   "homepage": "https://github.com/theovictors/ionic-ion-tinder-cards",
   "authors": [
-    "Max Lynch <max@drifty.com>"
+    "Max Lynch <max@drifty.com>",
     "Theo Victor <theo_victor@live.com>"
   ],
   "description": "A tinder-style card UI for Ionic apps",
